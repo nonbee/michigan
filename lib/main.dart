@@ -1,3 +1,4 @@
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -64,15 +65,16 @@ class MyApp extends StatelessWidget {
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // home: MyHomePage(title: 'Flutter Demo Home Page'),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Flutter layout demo'),
-          ),
-          body: Column(
-            children: [titleSection],
-          ),
-        ));
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        // home: Scaffold(
+        //   appBar: AppBar(
+        //     title: Text('わっしょい'),
+        //   ),
+        //   body: Column(
+        //     children: [titleSection],
+        //   ),
+        // )
+    );
   }
 }
 
@@ -105,6 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+  void _decrementCounter() {
+    setState(() {
+      if (0 < _counter) {
+        _counter--;
+      }
     });
   }
 
@@ -152,11 +161,37 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      floatingActionButton: Column(
+        verticalDirection: VerticalDirection.up,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            onPressed: _decrementCounter,
+            tooltip: 'Decrement',
+            child: Icon(Icons.arrow_circle_down_rounded),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 16.0),
+            child: FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: Icon(Icons.arrow_circle_up_rounded),
+            ),
+          )
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class RandomWordsState extends State<RandomWords> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+    return Text(wordPair.asPascalCase);
+  }
+}
+class RandomWords extends StatefulWidget {
+  @override
+  RandomWordsState createState() => new RandomWordsState();
 }
